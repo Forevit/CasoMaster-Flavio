@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caso Vorcaro — Linha do Tempo</title>
+<meta name="description" content="Linha do tempo independente sobre o caso Vorcaro/Banco Master: da liquidação do banco à quebra de sigilo no STF, com cronologia do financiamento do filme Dark Horse e as contradições de Flávio Bolsonaro sobre a relação com o banqueiro.">
+<meta property="og:title" content="Caso Vorcaro — Linha do Tempo">
+<meta property="og:description" content="Cronologia independente do caso Vorcaro/Banco Master, feita a partir de fontes públicas.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12151B;
+    --ink-2:#1B1F27;
+    --paper:#F3EEE1;
+    --paper-2:#E9E1CC;
+    --redact:#0B0B0C;
+    --gold:#C89B4A;
+    --gold-dim:#8A6E39;
+    --line:#3A3F4A;
+    --text-light:#E9E6DC;
+    --text-dim:#9CA0AC;
+
+    --c-financeiro:#4E7A9C;
+    --c-stf:#C89B4A;
+    --c-politica:#A24E3C;
+    --c-pessoas:#5F7A5E;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text-light);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+  }
+
+  a{color:var(--gold);}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;
+    padding:6rem 1.5rem 4rem;
+    max-width:900px;
+    margin:0 auto;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+  }
+  .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    color:var(--gold);
+    letter-spacing:0.03em;
+    margin-bottom:1.2rem;
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+  }
+  .kicker .bar{
+    display:inline-block;
+    width:2.2rem;
+    height:0.62em;
+    background:var(--redact);
+    border:1px solid var(--gold-dim);
+  }
+  h1.title{
+    font-family:'Source Serif 4',serif;
+    font-weight:700;
+    font-size:clamp(2.4rem,6vw,4.2rem);
+    line-height:1.05;
+    margin:0 0 1.4rem;
+    color:var(--text-light);
+  }
+  h1.title .redacted{
+    position:relative;
+    color:transparent;
+    background:var(--redact);
+    padding:0 0.15em;
+    border-radius:2px;
+    animation:reveal 2.4s 0.6s forwards ease-out;
+  }
+  @keyframes reveal{
+    0%{color:transparent;}
+    70%{color:transparent;}
+    100%{color:var(--text-light); background:transparent;}
+  }
+  p.dek{
+    font-size:1.1rem;
+    color:var(--text-dim);
+    max-width:60ch;
+    margin:0 0 2rem;
+  }
+  .disclaimer{
+    font-size:0.86rem;
+    color:var(--text-dim);
+    border-left:2px solid var(--gold-dim);
+    padding:0.7rem 0 0.7rem 1rem;
+    max-width:62ch;
+  }
+  .disclaimer strong{color:var(--text-light); font-weight:600;}
+
+  /* ---------- FILTERS ---------- */
+  .filters{
+    max-width:900px;
+    margin:2.4rem auto 0;
+    padding:0 1.5rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.6rem;
+  }
+  .filter-btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.76rem;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--text-dim);
+    padding:0.5rem 0.9rem;
+    border-radius:999px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .filter-btn:hover{border-color:var(--gold-dim); color:var(--text-light);}
+  .filter-btn.active{
+    border-color:currentColor;
+    color:var(--tone,var(--gold));
+    background:color-mix(in srgb, var(--tone,var(--gold)) 14%, transparent);
+  }
+  .filter-btn[data-cat="financeiro"]{--tone:var(--c-financeiro);}
+  .filter-btn[data-cat="stf"]{--tone:var(--c-stf);}
+  .filter-btn[data-cat="politica"]{--tone:var(--c-politica);}
+  .filter-btn[data-cat="pessoas"]{--tone:var(--c-pessoas);}
+
+  /* ---------- TIMELINE ---------- */
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:3rem 1.5rem 6rem;
+    position:relative;
+  }
+  .spine{
+    position:absolute;
+    left:1.5rem;
+    top:3rem;
+    bottom:6rem;
+    width:1px;
+    background:linear-gradient(var(--gold-dim), var(--line) 8%, var(--line) 92%, transparent);
+  }
+  @media(min-width:700px){
+    .spine{left:9.5rem;}
+  }
+
+  .event{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0.5rem;
+    padding-left:3rem;
+    margin-bottom:2.6rem;
+    transition:opacity .2s;
+  }
+  @media(min-width:700px){
+    .event{
+      grid-template-columns:7rem 1fr;
+      gap:1.6rem;
+      padding-left:0;
+    }
+  }
+  .event.hidden{display:none;}
+
+  .event .date{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    color:var(--text-dim);
+    padding-top:0.3rem;
+  }
+  @media(min-width:700px){
+    .event .date{text-align:right;}
+  }
+
+  .event .dot{
+    position:absolute;
+    left:calc(1.5rem - 4px);
+    top:0.55rem;
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:var(--dot,var(--gold));
+    box-shadow:0 0 0 3px var(--ink), 0 0 0 4px var(--line);
+  }
+  @media(min-width:700px){
+    .event .dot{left:calc(9.5rem - 4px);}
+  }
+
+  .card{
+    background:var(--paper);
+    color:var(--redact);
+    border-radius:3px;
+    padding:1.3rem 1.4rem 1.4rem;
+    border-left:4px solid var(--dot,var(--gold));
+    box-shadow:0 8px 20px -12px rgba(0,0,0,0.6);
+  }
+  .card .cat{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--dot,var(--gold-dim));
+    margin-bottom:0.45rem;
+    display:block;
+  }
+  .card h3{
+    font-family:'Source Serif 4',serif;
+    font-size:1.28rem;
+    font-weight:600;
+    margin:0 0 0.5rem;
+    color:var(--redact);
+  }
+  .card p{
+    margin:0 0 0.6rem;
+    font-size:0.96rem;
+    color:#2A2A28;
+  }
+  .card p:last-of-type{margin-bottom:0;}
+  .card .src{
+    font-size:0.78rem;
+    margin-top:0.7rem;
+  }
+  .card .src a{color:var(--gold-dim); text-decoration:underline;}
+
+  /* ---------- CONTRADICTIONS SECTION ---------- */
+  section.contra{
+    max-width:900px;
+    margin:0 auto;
+    padding:1rem 1.5rem 5rem;
+  }
+  .contra-head{
+    border-top:1px solid var(--line);
+    padding-top:3rem;
+    margin-bottom:2.4rem;
+  }
+  .contra-head .kicker{margin-bottom:1rem;}
+  .contra-head h2{
+    font-family:'Source Serif 4',serif;
+    font-size:clamp(1.8rem,4vw,2.6rem);
+    margin:0 0 1rem;
+  }
+  .contra-head p{
+    color:var(--text-dim);
+    max-width:62ch;
+    font-size:1rem;
+  }
+
+  .contra-card{
+    display:grid;
+    grid-template-columns:1fr;
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:1.6rem;
+  }
+  @media(min-width:700px){
+    .contra-card{grid-template-columns:1fr 1fr;}
+  }
+  .contra-half{
+    padding:1.5rem 1.6rem;
+  }
+  .contra-half.said{
+    background:var(--ink-2);
+  }
+  .contra-half.fact{
+    background:var(--paper);
+    color:var(--redact);
+  }
+  .contra-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:0.6rem;
+    display:block;
+  }
+  .contra-half.said .contra-label{color:var(--c-politica);}
+  .contra-half.fact .contra-label{color:var(--gold-dim);}
+  .contra-half .contra-date{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.74rem;
+    color:var(--text-dim);
+    display:block;
+    margin-bottom:0.5rem;
+  }
+  .contra-half.fact .contra-date{color:#6b6b63;}
+  .contra-half blockquote{
+    margin:0 0 0.6rem;
+    font-family:'Source Serif 4',serif;
+    font-size:1.15rem;
+    font-style:italic;
+    line-height:1.4;
+    color:var(--text-light);
+  }
+  .contra-half.said p.ctx{
+    font-size:0.88rem;
+    color:var(--text-dim);
+    margin:0;
+  }
+  .contra-half.fact p{
+    font-size:0.92rem;
+    margin:0 0 0.5rem;
+    color:#2A2A28;
+  }
+  .contra-half.fact p:last-of-type{margin-bottom:0;}
+  .contra-half.fact .src{font-size:0.76rem; margin-top:0.6rem;}
+  .contra-half.fact .src a{color:var(--gold-dim);}
+  .contra-arrow{
+    display:none;
+  }
+  @media(min-width:700px){
+    .contra-arrow{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+  }
+
+  .event[data-cat="financeiro"]{--dot:var(--c-financeiro);}
+  .event[data-cat="stf"]{--dot:var(--c-stf);}
+  .event[data-cat="politica"]{--dot:var(--c-politica);}
+  .event[data-cat="pessoas"]{--dot:var(--c-pessoas);}
+
+  /* ---------- DARK HORSE MINI-CHRONOLOGY ---------- */
+  section.darkhorse{
+    max-width:900px;
+    margin:0 auto;
+    padding:1rem 1.5rem 5rem;
+  }
+  .dh-head{
+    border-top:1px solid var(--line);
+    padding-top:3rem;
+    margin-bottom:2rem;
+  }
+  .dh-head h2{
+    font-family:'Source Serif 4',serif;
+    font-size:clamp(1.8rem,4vw,2.6rem);
+    margin:0 0 1rem;
+  }
+  .dh-head p{
+    color:var(--text-dim);
+    max-width:64ch;
+    font-size:1rem;
+  }
+  .dh-list{
+    border-left:1px solid var(--line);
+    padding-left:1.6rem;
+  }
+  .dh-item{
+    position:relative;
+    padding-bottom:1.5rem;
+  }
+  .dh-item:last-child{padding-bottom:0;}
+  .dh-item::before{
+    content:'';
+    position:absolute;
+    left:-1.66rem;
+    top:0.35rem;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--gold);
+  }
+  .dh-date{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.76rem;
+    color:var(--gold-dim);
+    display:block;
+    margin-bottom:0.3rem;
+  }
+  .dh-item p{
+    margin:0;
+    font-size:0.95rem;
+    color:var(--text-light);
+    max-width:68ch;
+  }
+  .dh-item .quote{
+    color:#F1DDB0;
+    font-style:italic;
+  }
+
+  footer{
+    max-width:900px;
+    margin:0 auto;
+    padding:2rem 1.5rem 4rem;
+    border-top:1px solid var(--line);
+    color:var(--text-dim);
+    font-size:0.82rem;
+  }
+  footer a{color:var(--text-dim); text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker"><span class="bar"></span> ACOMPANHAMENTO INDEPENDENTE · NÃO OFICIAL</div>
+  <h1 class="title">O caso <span class="redacted">Vorcaro</span></h1>
+  <p class="dek">Do colapso do Banco Master ao confronto com o STF: uma linha do tempo dos fatos publicamente noticiados sobre a Operação Compliance Zero, reunidos a partir da cobertura da imprensa.</p>
+  <p class="disclaimer">
+    <strong>Aviso:</strong> este site é um projeto pessoal, sem qualquer vínculo institucional, que organiza informações já divulgadas pela imprensa. As pessoas citadas respondem a processos em andamento e têm direito à presunção de inocência — nada aqui deve ser lido como acusação definitiva ou fato provado, apenas como registro do que foi noticiado e em que data.
+  </p>
+</header>
+
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-cat="all">Tudo</button>
+  <button class="filter-btn" data-cat="financeiro">Sistema financeiro</button>
+  <button class="filter-btn" data-cat="stf">STF &amp; sigilo</button>
+  <button class="filter-btn" data-cat="politica">Política</button>
+  <button class="filter-btn" data-cat="pessoas">Prisões &amp; pessoas</button>
+</div>
+
+<main>
+  <div class="spine"></div>
+  <div id="timeline"></div>
+</main>
+
+<section class="darkhorse">
+  <div class="dh-head">
+    <div class="kicker"><span class="bar"></span> RELATÓRIO DA PF · CELULAR DE VORCARO + DADOS DO COAF</div>
+    <h2>Os bastidores do financiamento do "Dark Horse"</h2>
+    <p>Em setembro de 2026, o STF retirou o sigilo de um relatório da PF que reconstrói, mensagem por mensagem, os contatos entre Flávio Bolsonaro e Daniel Vorcaro em 2025 — enquanto o filme sobre Jair Bolsonaro era negociado e filmado. Segundo a PF, os registros mostram Flávio como interlocutor direto de Vorcaro, e não apenas citado por terceiros.</p>
+  </div>
+  <div class="dh-list" id="darkhorse-list"></div>
+</section>
+
+<section class="contra">
+  <div class="contra-head">
+    <div class="kicker"><span class="bar"></span> DECLARAÇÃO x FATO</div>
+    <h2>As versões de Flávio Bolsonaro sobre Vorcaro</h2>
+    <p>Ao longo do caso, o senador e pré-candidato à Presidência Flávio Bolsonaro (PL-RJ) deu explicações públicas diferentes sobre sua relação com Daniel Vorcaro — que foram, em seguida, contestadas por novas informações divulgadas pela imprensa ou pela própria investigação. Abaixo, cada declaração ao lado do que veio à tona depois.</p>
+  </div>
+  <div id="contra-list"></div>
+</section>
+
+<footer>
+  Projeto independente, feito por curiosidade a partir de fontes públicas. Não representa posição sobre culpa ou inocência de nenhuma das pessoas citadas. Última atualização: 12 de setembro de 2026.
+</footer>
+
+<script>
+const CAT_LABEL = {
+  financeiro: "Sistema financeiro",
+  stf: "STF & sigilo",
+  politica: "Política",
+  pessoas: "Prisões & pessoas"
+};
+
+const events = [
+  {
+    date: "2024",
+    cat: "financeiro",
+    title: "Ministério Público Federal pede apuração",
+    text: "As investigações que dariam origem à Operação Compliance Zero começam a partir de um pedido do MPF para apurar suspeitas envolvendo o Banco Master, controlado pelo banqueiro Daniel Vorcaro.",
+    src: null
+  },
+  {
+    date: "17 nov 2025",
+    cat: "pessoas",
+    title: "Primeira prisão de Vorcaro, em Guarulhos",
+    text: "Daniel Vorcaro é preso à noite no Aeroporto Internacional de Guarulhos, pouco antes de embarcar em um voo internacional.",
+    src: null
+  },
+  {
+    date: "18 nov 2025",
+    cat: "financeiro",
+    title: "1ª fase da Compliance Zero é deflagrada",
+    text: "Um dia após o anúncio da intenção de compra do Banco Master pela Fictor Holding, a Polícia Federal cumpre 5 prisões preventivas, 2 temporárias e 25 mandados de busca. O foco inicial é a emissão de CDBs com rentabilidade muito acima do mercado, sem lastro compatível, e a venda de carteiras de crédito ao BRB (Banco de Brasília).",
+    src: null
+  },
+  {
+    date: "29 nov 2025",
+    cat: "pessoas",
+    title: "Vorcaro é solto pelo TRF-1",
+    text: "A relatora do caso no Tribunal Regional Federal da 1ª Região, Solange Salgado da Silva, revoga a prisão de Vorcaro e de outros quatro investigados, impondo medidas cautelares em seu lugar.",
+    src: null
+  },
+  {
+    date: "dez 2025",
+    cat: "stf",
+    title: "STF decreta sigilo máximo sobre recurso da defesa",
+    text: "A defesa de Vorcaro leva ao STF uma reclamação contestando a competência da Justiça Federal de Brasília para conduzir o caso. O ministro Dias Toffoli, relator sorteado, decreta sigilo máximo — nem mesmo as iniciais das partes ficam acessíveis ao público. No mesmo período, torna-se público um contrato entre o Banco Master e o escritório de advocacia de Viviane Barci de Moraes, esposa do ministro Alexandre de Moraes.",
+    src: null
+  },
+  {
+    date: "4 mar 2026",
+    cat: "financeiro",
+    title: "3ª fase da Compliance Zero",
+    text: "Nova etapa da operação amplia as apurações sobre o esquema financeiro. Elementos colhidos nesta fase seriam usados depois para embasar a investigação sobre uma suposta rede de influência de Vorcaro.",
+    src: null
+  },
+  {
+    date: "7 mai 2026",
+    cat: "politica",
+    title: "5ª fase mira o senador Ciro Nogueira",
+    text: "A PF cumpre mandados contra o senador Ciro Nogueira e pessoas do entorno de Vorcaro, além de determinar a prisão temporária de Felipe Cançado Vorcaro. É o primeiro salto claro do caso do núcleo financeiro para o núcleo político.",
+    src: "https://jornalgrandebahia.com.br/2026/05/reveja-as-cinco-fases-da-operacao-compliance-zero-investigacao-que-avancou-do-banco-master-ao-nucleo-politico-esquema-atinge-membro-do-centrao-no-congresso-nacional/|Jornal Grande Bahia"
+  },
+  {
+    date: "14 mai 2026",
+    cat: "pessoas",
+    title: "6ª fase: prisão do pai de Vorcaro e ameaça a jornalista",
+    text: "Determinada pelo ministro André Mendonça, a fase prende Henrique Vorcaro (pai de Daniel) em Belo Horizonte, além do cunhado Fabiano Zettel e de Luiz Phillipi Machado de Moraes Mourão. Na decisão que autoriza a prisão, Mendonça registra que Vorcaro teria planejado um assalto simulado para agredir fisicamente um jornalista — segundo o jornal O Globo, o colunista Lauro Jardim.",
+    src: "https://www.terra.com.br/noticias/caso-master-relembre-as-6-fases-e-os-desdobramentos-da-operacao-compliance-zero,16fe12e6619d80b12a93d9b24532e87a6khwn38s.html|Terra"
+  },
+  {
+    date: "19 jun 2026",
+    cat: "politica",
+    title: "9ª fase alcança o senador Jaques Wagner",
+    text: "A operação já soma nove fases e passa a incluir figuras de peso da política nacional, além de familiares de Vorcaro, executivos do setor financeiro e policiais federais.",
+    src: "https://jovempan.com.br/politica/operacao-compliance-zero-relembre-todas-as-fases-da-investigacao-ate-chegar-em-wagner/|Jovem Pan"
+  },
+  {
+    date: "18 jul 2026",
+    cat: "financeiro",
+    title: "PF projeta até 60 fases",
+    text: "A Polícia Federal estima que a Compliance Zero pode chegar a 60 fases e se estender até 2027, considerando o volume de dados em nuvem e documentos físicos. É classificada como o maior escândalo bancário da história do Brasil, com rombo estimado em R$ 52 bilhões após a liquidação do Master e do Will Bank.",
+    src: "https://www.gazetadopovo.com.br/republica/como-a-pf-planeja-avancar-na-operacao-compliance-zero-durante-as-eleicoes/|Gazeta do Povo"
+  },
+  {
+    date: "26 jul 2026",
+    cat: "financeiro",
+    title: "Balanço: dez fases e R$ 52 bi de rombo",
+    text: "Levantamento aponta dez fases já cumpridas, prisões preventivas, bloqueios bilionários e apurações sobre pagamentos do Fundo Garantidor de Créditos (FGC) e fundos previdenciários. A reportagem reforça que as acusações seguem em apuração, sem condenações definitivas.",
+    src: "https://jornalgrandebahia.com.br/2026/07/daniel-vorcaro-e-o-caso-banco-master-suspeita-de-fraude-bilionaria-perdas-no-brb-impacto-no-fgc-e-dez-fases-da-compliance-zero/|Jornal Grande Bahia"
+  },
+  {
+    date: "2 dez 2025 → jul 2026",
+    cat: "stf",
+    title: "Caso muda de relator: de Toffoli para Mendonça",
+    text: "Após a saída de Dias Toffoli da condução do núcleo Master no STF, os procedimentos são redistribuídos e o ministro André Mendonça assume a relatoria das principais apurações, o que marca o início de uma fase de maior tensão entre o gabinete do ministro e setores da Polícia Federal.",
+    src: "https://agorars.com/brasil-e-mundo/caso-master-linha-do-tempo-crise-stf-brb-vorcaro/|Agora RS"
+  },
+  {
+    date: "1 set 2026",
+    cat: "stf",
+    title: "Mendonça retira o sigilo da apuração sobre Vorcaro e Moraes",
+    text: "O ministro André Mendonça determina o levantamento do sigilo de uma apuração sobre uma suposta 'rede de monitoramento e influência' ligada a Vorcaro, com potencial infiltração em altas instâncias públicas. Segundo a PF, mensagens encontradas no celular de Vorcaro — parte delas endereçadas a um contato salvo como 'Alexandre de Moraes BRASILIA' — indicariam pedidos de intervenção junto ao diretor-geral da PF, Andrei Rodrigues, e ao procurador-geral Paulo Gonet, além de conhecimento prévio de investigações em curso. O material, com relatório de 218 páginas, será analisado pelo plenário do STF em sessão pública.",
+    src: "https://www.poder360.com.br/poder-justica/mendonca-retira-sigilo-de-acao-sobre-vorcaro-e-moraes/|Poder360"
+  },
+  {
+    date: "12 set 2026",
+    cat: "politica",
+    title: "Sigilo aberto também na linha que envolve Flávio Bolsonaro",
+    text: "Com a quebra de sigilo, vem à tona uma frente da investigação sobre R$ 134 milhões que teriam sido pedidos por Flávio Bolsonaro a Vorcaro — a PF apura se os recursos têm origem ilícita e se parte foi usada para despesas de Eduardo Bolsonaro nos Estados Unidos. Há ainda uma linha separada, apelidada de 'Dark Horse', sobre uso de emendas do deputado Mario Frias. Candidato à Presidência, Flávio Bolsonaro diz que a quebra de sigilo terá 'impacto zero' sobre sua campanha.",
+    src: "https://www.em.com.br/politica/2026/09/7499227-flavio-diz-que-quebra-de-sigilo-no-caso-vorcaro-tera-impacto-zero.html|Estado de Minas"
+  },
+  {
+    date: "ago → nov 2025",
+    cat: "politica",
+    title: "Flávio Bolsonaro muda a versão sobre Vorcaro",
+    text: "Ao longo de 2025, Flávio troca mensagens, ligações e ao menos um encontro presencial com Vorcaro tratando do financiamento do filme \"Dark Horse\". Em 2026, ele nega repetidamente qualquer contato ou pedido de dinheiro — até que áudios e o próprio relatório da PF mostram o contrário. Veja o detalhe logo abaixo da linha do tempo.",
+    src: "https://revistaforum.com.br/politica/7-mentiras-flavio-master/|Revista Fórum"
+  }
+];
+
+const darkHorseContacts = [
+  {
+    date: "20 ago 2025",
+    text: "Primeiro registro direto de conversa entre os dois. Vorcaro sugere um horário — <span class=\"quote\">\"21 pode ser\"</span> — e Flávio confirma, avisando às 21h47 que estava <span class=\"quote\">\"a caminho\"</span>: indício de um encontro presencial, segundo a PF."
+  },
+  {
+    date: "8 set 2025",
+    text: "Flávio manda um áudio cobrando repasses atrasados para a produção, citando o medo de deixar de pagar o ator Jim Caviezel e o diretor Cyrus Nowrasteh. Vorcaro pede desculpas e diz que resolveria no dia seguinte."
+  },
+  {
+    date: "15 set 2025",
+    text: "O intermediário Thiago Miranda avisa Vorcaro que Flávio quer se encontrar para mostrar cenas já gravadas — sugere que seja na própria casa do banqueiro, em Brasília."
+  },
+  {
+    date: "16 set 2025",
+    text: "Ligação telefônica entre os dois. Mesma data de uma transferência de US$ 1,66 milhão da Entre Investimentos para o fundo Havengate, nos EUA — a PF nota a coincidência, mas não afirma relação de causa entre os dois fatos."
+  },
+  {
+    date: "17, 23 e 24 set 2025",
+    text: "Novas trocas de mensagem tentando marcar um encontro (um dos registros menciona <span class=\"quote\">\"14:30?\"</span>)."
+  },
+  {
+    date: "22 out 2025",
+    text: "Flávio avisa que a filmagem está no 3º dia e \"no limite\" do orçamento, pede uma definição sobre os recursos e diz que precisaria de \"outro caminho com urgência\" se o aporte não saísse. No mesmo dia, convida Vorcaro para um jantar em São Paulo com o elenco."
+  },
+  {
+    date: "fim out / início nov 2025",
+    text: "Thiago Miranda volta a cobrar Vorcaro: valores dados como pagos ainda não teriam chegado aos destinatários nos Estados Unidos."
+  },
+  {
+    date: "7 nov 2025",
+    text: "Flávio manda um vídeo da produção e agradece: <span class=\"quote\">\"Tá perdendo, irmão! Tudo isso só está sendo possível por causa de vc!\"</span>"
+  },
+  {
+    date: "16 nov 2025",
+    text: "Tenta ligar de novo e escreve: <span class=\"quote\">\"Irmão, estou e estarei contigo sempre, não tem meia conversa entre a gente. Só preciso que me dê uma luz! Abs!\"</span> Vorcaro responde com uma imagem de visualização única; Flávio encerra com \"Amém\"."
+  },
+  {
+    date: "17 nov 2025 (noite)",
+    text: "Vorcaro é preso tentando embarcar em um jato particular rumo ao exterior."
+  },
+  {
+    date: "mai 2026",
+    text: "Fora dessa cronologia da PF, Flávio confirma publicamente um encontro posterior com Vorcaro — já durante a prisão domiciliar dele, com tornozeleira eletrônica — dizendo que serviu para \"botar ponto final\" no assunto do filme."
+  }
+];
+
+const dhListEl = document.getElementById('darkhorse-list');
+darkHorseContacts.forEach(d => {
+  const el = document.createElement('div');
+  el.className = 'dh-item';
+  el.innerHTML = `<span class="dh-date">${d.date}</span><p>${d.text}</p>`;
+  dhListEl.appendChild(el);
+});
+
+const contradictions = [
+  {
+    saidDate: "16 mar 2026",
+    said: "Meu telefone não é segredo para ninguém.",
+    ctx: "Resposta dada quando a Polícia Federal revelou publicamente que o contato do senador constava na agenda telefônica de Vorcaro. Na ocasião, Flávio minimizou o fato e negou manter qualquer relação com o banqueiro.",
+    factDate: "12 set 2026",
+    fact: "O relatório da PF com o sigilo retirado mostra registros de contato direto ao longo de 2025 — mensagens, ligações e ao menos um encontro presencial — todos relacionados ao financiamento do filme \"Dark Horse\".",
+    src: "https://revistaforum.com.br/politica/7-mentiras-flavio-master/|Revista Fórum"
+  },
+  {
+    saidDate: "coletiva de imprensa, mai 2026",
+    said: "Nunca falei com Vorcaro.",
+    ctx: "Declaração dada em coletiva de imprensa, negando qualquer comunicação com o ex-banqueiro.",
+    factDate: "horas depois",
+    fact: "Ainda no mesmo dia, o Intercept Brasil revela mensagens trocadas diretamente entre os dois — incluindo o áudio em que Flávio cobra repasses para o filme e chama Vorcaro de \"irmão\".",
+    src: "https://revistaforum.com.br/politica/7-mentiras-flavio-master/|Revista Fórum"
+  },
+  {
+    saidDate: "13 mai 2026",
+    said: "Nunca encontrei Vorcaro pessoalmente.",
+    ctx: "Declaração ao jornal O Globo, negando qualquer encontro presencial com o banqueiro.",
+    factDate: "dias depois",
+    fact: "O Metrópoles revela que Flávio visitou Vorcaro pessoalmente na mansão do banqueiro durante o período em que ele cumpria prisão domiciliar com tornozeleira eletrônica.",
+    src: "https://revistaforum.com.br/politica/7-mentiras-flavio-master/|Revista Fórum"
+  },
+  {
+    saidDate: "antes de 13 mai 2026",
+    said: "Nunca pedi dinheiro a Vorcaro.",
+    ctx: "Segundo o G1, Flávio chegou a negar que havia solicitado recursos ao ex-banqueiro para a produção do filme, antes da divulgação das mensagens.",
+    factDate: "13 mai 2026",
+    fact: "Após a repercussão dos áudios, Flávio confirma que procurou Vorcaro para captar recursos, classificando a negociação como uma busca privada por patrocínio para o filme.",
+    src: "https://revistaforum.com.br/politica/7-mentiras-flavio-master/|Revista Fórum"
+  },
+  {
+    saidDate: "entrevista à GloboNews",
+    said: "O último pagamento de Vorcaro foi em maio de 2025.",
+    ctx: "Declaração dada em entrevista à GloboNews sobre quando teriam cessado os repasses do banqueiro para a produção do filme.",
+    factDate: "set 2025 (revelado em set 2026)",
+    fact: "Relatório do Coaf identifica uma nova remessa de US$ 1,66 milhão enviada por Vorcaro em setembro de 2025 — quatro meses depois da data indicada pelo senador.",
+    src: "https://revistaforum.com.br/politica/7-mentiras-flavio-master/|Revista Fórum"
+  },
+  {
+    saidDate: "posição pública mantida",
+    said: "Era só uma relação de patrocínio privado, sem nenhuma irregularidade.",
+    ctx: "A defesa de Flávio sustenta publicamente que os recursos negociados com Vorcaro tinham origem e natureza estritamente privadas — uma questão de patrocínio a um projeto cultural.",
+    factDate: "em apuração",
+    fact: "A PF passou a investigar a origem e o trajeto dos valores usados no filme, incluindo transferências que a reportagem liga a fundos previdenciários, além de elementos que a investigação associa a possível lavagem de dinheiro. Nada disso foi julgado ou provado até o momento — são linhas de apuração em aberto, não conclusões.",
+    src: "https://revistaforum.com.br/politica/7-mentiras-flavio-master/|Revista Fórum"
+  },
+  {
+    saidDate: "1º sem. 2026",
+    said: "Não tenho nenhuma ligação com Daniel Vorcaro.",
+    ctx: "Segundo a CNN Brasil, Flávio negou pessoalmente a um banqueiro influente do mercado financeiro que mantinha qualquer contato com Vorcaro, buscando afastar a suspeita de que seu nome pudesse aparecer associado ao escândalo do Master.",
+    factDate: "dias depois",
+    fact: "A reportagem mostra que, dias depois dessa conversa, o noticiário comprovou o contrário — os próprios áudios com Vorcaro vieram à tona. Flávio tentou contato de novo com o banqueiro para se explicar, mas não foi recebido.",
+    src: "https://www.cnnbrasil.com.br/politica/flavio-nega-conhecer-vorcaro-a-banqueiro-e-apos-audio-nao-e-recebido/|CNN Brasil"
+  },
+  {
+    saidDate: "15 jul 2026",
+    said: "Não sei se é verdade... mais uma das várias fotos que tiro todos os dias.",
+    ctx: "Reação de Flávio, em vídeo nas redes sociais, após o ICL Notícias publicar uma foto sua ao lado de Luiz Phillipi Machado de Moraes Mourão, o \"Sicário\" — apontado como cúmplice de Vorcaro — tirada em 2022. Flávio sugeriu que a imagem poderia ser fabricada por \"blogs de esquerda\".",
+    factDate: "16 jul 2026",
+    fact: "O ICL, em parceria com o CLIP (Centro Latino-americano de Investigación Periodística), analisa a foto com cinco ferramentas distintas de detecção de imagens geradas por IA e checagem de montagem (incluindo InVID) e não encontra indícios de manipulação ou de que a imagem tenha sido criada artificialmente.",
+    src: "https://www.cnnbrasil.com.br/politica/mais-uma-das-varias-que-tiro-diz-flavio-sobre-foto-com-sicario/|CNN Brasil"
+  }
+];
+
+const contraListEl = document.getElementById('contra-list');
+contradictions.forEach(c => {
+  const [url, label] = c.src.split('|');
+  const el = document.createElement('div');
+  el.className = 'contra-card';
+  el.innerHTML = `
+    <div class="contra-half said">
+      <span class="contra-label">Ele disse</span>
+      <span class="contra-date">${c.saidDate}</span>
+      <blockquote>“${c.said}”</blockquote>
+      <p class="ctx">${c.ctx}</p>
+    </div>
+    <div class="contra-half fact">
+      <span class="contra-label">Veio à tona</span>
+      <span class="contra-date">${c.factDate}</span>
+      <p>${c.fact}</p>
+      <div class="src">Fonte: <a href="${url}" target="_blank" rel="noopener">${label}</a></div>
+    </div>
+  `;
+  contraListEl.appendChild(el);
+});
+
+const timelineEl = document.getElementById('timeline');
+
+function srcHtml(src){
+  if(!src) return '';
+  const [url, label] = src.split('|');
+  return `<div class="src">Fonte: <a href="${url}" target="_blank" rel="noopener">${label}</a></div>`;
+}
+
+events.forEach((ev, i) => {
+  const el = document.createElement('article');
+  el.className = 'event';
+  el.dataset.cat = ev.cat;
+  el.innerHTML = `
+    <div class="date">${ev.date}</div>
+    <span class="dot"></span>
+    <div class="card">
+      <span class="cat">${CAT_LABEL[ev.cat]}</span>
+      <h3>${ev.title}</h3>
+      <p>${ev.text}</p>
+      ${srcHtml(ev.src)}
+    </div>
+  `;
+  timelineEl.appendChild(el);
+});
+
+document.getElementById('filters').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-btn');
+  if(!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const cat = btn.dataset.cat;
+  document.querySelectorAll('.event').forEach(ev => {
+    ev.classList.toggle('hidden', cat !== 'all' && ev.dataset.cat !== cat);
+  });
+});
+</script>
+
+</body>
+</html>
