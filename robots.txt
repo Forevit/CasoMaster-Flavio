@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://casomaster.eduardoferreira.space/sitemap.xml
